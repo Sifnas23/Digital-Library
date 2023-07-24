@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card" style="margin-top:20px;width:1000px;margin-left:100px">
+    <h5 class="card-header">Hoverable rows</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Image</th>
+            </tr>
+            </thead>
+            {% for d in data %}
+            <tbody class="table-border-bottom-0">
+            <tr>
+                <td>{{d.Category}}</td>
+                <td>{{d.Product}}</td>
+                <td>{{d.Price}}</td>
+                <td>{{d.Description}}</td>
+                <td>
+                    <img src="{{d.Image.url}}" height="50px" width="50px">
+                </td>
+                <td>
+                    <div>
+                        <form method="POST" action="{% url 'editproduct' dataid=d.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-primary" style="width:100px">Edit</button>
+                        </form>
+                        <br>
+                        <form action="{% url 'delproduct' dataid=d.id %}">
+                            <button type="submit" class="btn btn-sm btn-primary" style="width:100px">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
+{% endblock %}
